@@ -89,7 +89,7 @@
                 android:textSize="10dp" />
 
             <TextView
-                android:id="@+id/textView15"
+                android:id="@+id/textAbril"
                 android:layout_width="85dp"
                 android:layout_height="37dp"
                 android:gravity="center"
@@ -97,7 +97,7 @@
                 android:textSize="10dp" />
 
             <TextView
-                android:id="@+id/textView16"
+                android:id="@+id/textMayo"
                 android:layout_width="85dp"
                 android:layout_height="37dp"
                 android:gravity="center"
@@ -105,7 +105,7 @@
                 android:textSize="10dp" />
 
             <TextView
-                android:id="@+id/textView17"
+                android:id="@+id/textJunio"
                 android:layout_width="85dp"
                 android:layout_height="37dp"
                 android:gravity="center"
@@ -127,7 +127,7 @@
                 android:textSize="10dp" />
 
             <TextView
-                android:id="@+id/textView19"
+                android:id="@+id/textPreUni21"
                 android:layout_width="85dp"
                 android:layout_height="37dp"
                 android:gravity="center"
@@ -135,7 +135,7 @@
                 android:textSize="10dp" />
 
             <TextView
-                android:id="@+id/textView20"
+                android:id="@+id/textPreUni22"
                 android:layout_width="85dp"
                 android:layout_height="37dp"
                 android:gravity="center"
@@ -143,7 +143,7 @@
                 android:textSize="10dp" />
 
             <TextView
-                android:id="@+id/textView21"
+                android:id="@+id/textPreUni23"
                 android:layout_width="85dp"
                 android:layout_height="37dp"
                 android:gravity="center"
@@ -165,7 +165,7 @@
                 android:textSize="10dp" />
 
             <TextView
-                android:id="@+id/textView23"
+                android:id="@+id/textbruto21"
                 android:layout_width="85dp"
                 android:layout_height="37dp"
                 android:gravity="center"
@@ -173,7 +173,7 @@
                 android:textSize="10dp" />
 
             <TextView
-                android:id="@+id/textView24"
+                android:id="@+id/textbruto22"
                 android:layout_width="85dp"
                 android:layout_height="37dp"
                 android:gravity="center"
@@ -181,51 +181,15 @@
                 android:textSize="10dp" />
 
             <TextView
-                android:id="@+id/textView25"
-                android:layout_width="85dp"
-                android:layout_height="37dp"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="10dp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/textView26"
-                android:layout_width="105dp"
-                android:layout_height="37dp"
-                android:gravity="center"
-                android:text="Ventas al contado (Bs)"
-                android:textColor="@color/black"
-                android:textSize="10dp" />
-
-            <TextView
-                android:id="@+id/textView27"
-                android:layout_width="85dp"
-                android:layout_height="37dp"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="10dp" />
-
-            <TextView
-                android:id="@+id/textView28"
-                android:layout_width="85dp"
-                android:layout_height="37dp"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="10dp" />
-
-            <TextView
-                android:id="@+id/textView29"
+                android:id="@+id/textbruto23"
                 android:layout_width="85dp"
                 android:layout_height="37dp"
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="10dp" />
         </TableRow>
+
+
 
         <TableRow
             android:layout_width="match_parent"
@@ -234,14 +198,14 @@
             <TextView
                 android:id="@+id/textView30"
                 android:layout_width="105dp"
-                android:layout_height="37dp"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="Ventas al contado (Bs)"
                 android:textColor="@color/black"
                 android:textSize="10dp" />
 
             <TextView
-                android:id="@+id/textView31"
+                android:id="@+id/contadoabr"
                 android:layout_width="85dp"
                 android:layout_height="37dp"
                 android:gravity="center"
@@ -249,7 +213,7 @@
                 android:textSize="10dp" />
 
             <TextView
-                android:id="@+id/textView32"
+                android:id="@+id/contadomay"
                 android:layout_width="85dp"
                 android:layout_height="37dp"
                 android:gravity="center"
@@ -257,7 +221,7 @@
                 android:textSize="10dp" />
 
             <TextView
-                android:id="@+id/textView33"
+                android:id="@+id/contadojun"
                 android:layout_width="85dp"
                 android:layout_height="37dp"
                 android:gravity="center"
@@ -274,12 +238,12 @@
                 android:layout_width="105dp"
                 android:layout_height="37dp"
                 android:gravity="center"
-                android:text="Recup. C*C 30 dias (Bs)"
+                android:text="Recup. C*C 60 dias (Bs)"
                 android:textColor="@color/black"
                 android:textSize="10dp" />
 
             <TextView
-                android:id="@+id/textView35"
+                android:id="@+id/rec30abril"
                 android:layout_width="85dp"
                 android:layout_height="37dp"
                 android:gravity="center"
@@ -287,7 +251,7 @@
                 android:textSize="10dp" />
 
             <TextView
-                android:id="@+id/textView36"
+                android:id="@+id/rec30mayo"
                 android:layout_width="85dp"
                 android:layout_height="37dp"
                 android:gravity="center"
@@ -295,7 +259,7 @@
                 android:textSize="10dp" />
 
             <TextView
-                android:id="@+id/textView37"
+                android:id="@+id/rec30junio"
                 android:layout_width="85dp"
                 android:layout_height="37dp"
                 android:gravity="center"
@@ -312,12 +276,12 @@
                 android:layout_width="105dp"
                 android:layout_height="37dp"
                 android:gravity="center"
-                android:text="Recup. C*C 60 dias (Bs)"
+                android:text="Recup. C*C 30 dias (Bs)"
                 android:textColor="@color/black"
                 android:textSize="10dp" />
 
             <TextView
-                android:id="@+id/textView39"
+                android:id="@+id/rec60abril"
                 android:layout_width="85dp"
                 android:layout_height="37dp"
                 android:gravity="center"
@@ -325,7 +289,7 @@
                 android:textSize="10dp" />
 
             <TextView
-                android:id="@+id/textView40"
+                android:id="@+id/rec60mayo"
                 android:layout_width="85dp"
                 android:layout_height="37dp"
                 android:gravity="center"
@@ -333,7 +297,7 @@
                 android:textSize="10dp" />
 
             <TextView
-                android:id="@+id/textView41"
+                android:id="@+id/rec60junio"
                 android:layout_width="85dp"
                 android:layout_height="37dp"
                 android:gravity="center"
@@ -345,7 +309,7 @@
     </TableLayout>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/generar_proyeccion_tabla"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Generar proyección de la tabla de ventas"
