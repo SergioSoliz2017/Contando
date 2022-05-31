@@ -16,6 +16,8 @@ class MainActivity6 : AppCompatActivity() {
     var listaEncabezadosRetroactivoPatronales : ArrayList<String>? = ArrayList()
     var listaValoresRetroactivoPatronal : ArrayList<String>? = ArrayList()
     var proyeccion : String = ""
+    var listaIngresoBruto : ArrayList<String> = ArrayList()
+    var mesInicial = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +25,10 @@ class MainActivity6 : AppCompatActivity() {
         val bundleMesAño = intent.extras
         val bundleSalario = intent.extras
         val bundleProyeccion = intent.extras
+        val bundleVentas = intent.extras
+        val bundleMesIni = intent.extras
+        listaIngresoBruto = bundleVentas?.getStringArrayList ("keyValoresListaIngresoBruto")!!
+        mesInicial = bundleMesIni?.getInt("keyMesInicial")!!
         proyeccion = bundleProyeccion!!.getString("keyValorProyeccion")!!
         arregloMesAño = bundleMesAño?.getStringArray("keyValoresMesAño")!!
         arregloSalario = bundleSalario?.getStringArray("keyValoresSalarios")!!
@@ -47,9 +53,15 @@ class MainActivity6 : AppCompatActivity() {
     private fun siguiente (){
         boton_flujo_salida.setOnClickListener {
             val bundleProyeccion = Bundle()
+            val bundleListaIngresoBruto = Bundle()
+            val bundleMesIni = Bundle()
+            bundleListaIngresoBruto.putStringArrayList("keyValoresListaIngresoBruto",listaIngresoBruto)
+            bundleMesIni.putInt("keyMesInicial",mesInicial)
             bundleProyeccion.putString("keyValorProyeccion",proyeccion)
             val ventana = Intent(this, MainActivity8:: class.java)
             ventana.putExtras(bundleProyeccion)
+            ventana.putExtras(bundleListaIngresoBruto)
+            ventana.putExtras(bundleMesIni)
             startActivity(ventana)
         }
     }
@@ -58,7 +70,7 @@ class MainActivity6 : AppCompatActivity() {
         var cont : Int = 0;
         var aum : Int = 0;
         var añoInicial : Int = arregloMesAño!![4].toInt()
-        while (cont < 5){
+        while (cont < 6){
             añoInicial  = añoInicial + aum
             listaEncabezadosRetroactivoPatronales!!.add("RETROACTIVO $añoInicial   ")
             listaEncabezadosRetroactivoPatronales!!.add("   NUMERO DE MESES $añoInicial   ")
@@ -72,7 +84,7 @@ class MainActivity6 : AppCompatActivity() {
         var cont : Int = 0;
         var aum : Int = 0;
         var añoInicial : Int = arregloMesAño!![4].toInt()
-        while (cont < 5){
+        while (cont < 6){
             añoInicial  = añoInicial + aum
             listaEncabezadosRetroactivoSalarial!!.add("RETROACTIVO $añoInicial   ")
             listaEncabezadosRetroactivoSalarial!!.add("   NUMERO DE MESES $añoInicial   ")
@@ -86,7 +98,7 @@ class MainActivity6 : AppCompatActivity() {
         var cont : Int = 0;
         var aum : Int = 0;
         var añoInicial : Int = arregloMesAño!![4].toInt()
-        while (cont < 5){
+        while (cont < 6){
             añoInicial  = añoInicial + aum
             listaEncabezadosAportesPatronales!!.add("ABRIL $añoInicial   ")
             listaEncabezadosAportesPatronales!!.add("   MAYO $añoInicial   ")

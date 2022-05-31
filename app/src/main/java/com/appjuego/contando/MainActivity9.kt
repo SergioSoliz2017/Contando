@@ -19,7 +19,8 @@ class MainActivity9 : AppCompatActivity() {
     var encabezadoAlquiler : ArrayList<String> = ArrayList()
     var encabezadoTotal : ArrayList<String> = ArrayList()
     var listaTotal : ArrayList<String> = ArrayList()
-
+    var listaIngresoBruto : ArrayList<String> = ArrayList()
+    var mesInicial = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +29,10 @@ class MainActivity9 : AppCompatActivity() {
         val bundleGasto = intent.extras
         val bundleAlquiler = intent.extras
         val bundleProyeccion = intent.extras
+        val bundleVentas = intent.extras
+        val bundleMesIni = intent.extras
+        listaIngresoBruto = bundleVentas?.getStringArrayList ("keyValoresListaIngresoBruto")!!
+        mesInicial = bundleMesIni?.getInt("keyMesInicial")!!
         listaComprasMensuales = bundleCompras?.getStringArrayList("keyValoresCompras")!!
         listaGastoMensuales = bundleGasto?.getStringArrayList("keyValoresGastos")!!
         listaAlquileresMensuales = bundleAlquiler?.getStringArrayList("keyValoresAlquiler")!!
@@ -60,16 +65,28 @@ class MainActivity9 : AppCompatActivity() {
     private fun siguiente() {
         boton_iva.setOnClickListener {
             val bundleProyeccion = Bundle()
+            val bundleListaIngresoBruto = Bundle()
+            val bundleMesIni = Bundle()
+            val bundleCompraMensual = Bundle()
+            val bundleTotal = Bundle()
+            bundleTotal.putStringArrayList("keyValoresTotalGastos",listaTotal)
+            bundleCompraMensual.putStringArrayList("keyValoresCompraMensual",listaComprasMensuales)
+            bundleListaIngresoBruto.putStringArrayList("keyValoresListaIngresoBruto",listaIngresoBruto)
+            bundleMesIni.putInt("keyMesInicial",mesInicial)
             bundleProyeccion.putString("keyValorProyeccion",proyeccion)
             val ventana = Intent(this, MainActivity7:: class.java)
+            ventana.putExtras(bundleTotal)
+            ventana.putExtras(bundleCompraMensual)
             ventana.putExtras(bundleProyeccion)
+            ventana.putExtras(bundleListaIngresoBruto)
+            ventana.putExtras(bundleMesIni)
             startActivity(ventana)
         }
     }
 
     private fun crearValoresTotal() {
         var cont = 0;
-        while (cont <= 47){
+        while (cont <= 59){
             var totalMes = listaAlquileresMensuales.get(cont).toDouble() + listaGastoMensuales.get(cont).toDouble()
             listaTotal.add(redondear(totalMes).toString())
             cont++
@@ -78,7 +95,7 @@ class MainActivity9 : AppCompatActivity() {
 
     private fun crearValoresAlquiler() {
         var cont = 3;
-        while (cont <= 47){
+        while (cont <= 59){
             var alquilerMes = listaAlquileresMensuales.get(cont-3).toDouble() + ( listaAlquileresMensuales.get(cont-3).toDouble() * proyeccion.toDouble())
             listaAlquileresMensuales.add(redondear(alquilerMes).toString())
             cont++
@@ -87,7 +104,7 @@ class MainActivity9 : AppCompatActivity() {
 
     private fun crearValoresGasto() {
         var cont = 3;
-        while (cont <= 47){
+        while (cont <= 59){
             var gastoMes = listaGastoMensuales.get(cont-3).toDouble() + ( listaGastoMensuales.get(cont-3).toDouble() * proyeccion.toDouble())
             listaGastoMensuales.add(redondear(gastoMes).toString())
             cont++
@@ -96,7 +113,7 @@ class MainActivity9 : AppCompatActivity() {
 
     private fun crearValoresCompra() {
         var cont = 3;
-        while (cont <= 47){
+        while (cont <= 59){
             var compraMes = listaComprasMensuales.get(cont-3).toDouble() + ( listaComprasMensuales.get(cont-3).toDouble() * proyeccion.toDouble())
             listaComprasMensuales.add(redondear(compraMes).toString())
             cont++
@@ -105,7 +122,7 @@ class MainActivity9 : AppCompatActivity() {
 
     private fun crearEncabezadoTotal() {
         var añoInicio = 2021
-        while (añoInicio < 2025) {
+        while (añoInicio < 2026) {
             encabezadoTotal.add("  ${" ABRIL  "} $añoInicio  ")
             encabezadoTotal.add("  ${" MAYO  "} $añoInicio  ")
             encabezadoTotal.add("  ${" JUNIO  "} $añoInicio  ")
@@ -124,7 +141,7 @@ class MainActivity9 : AppCompatActivity() {
 
     private fun crearEncabezadoAlquiler() {
         var añoInicio = 2021
-        while (añoInicio < 2025) {
+        while (añoInicio < 2026) {
             encabezadoAlquiler.add("  ${" ABRIL  "} $añoInicio  ")
             encabezadoAlquiler.add("  ${" MAYO  "} $añoInicio  ")
             encabezadoAlquiler.add("  ${" JUNIO  "} $añoInicio  ")
@@ -143,7 +160,7 @@ class MainActivity9 : AppCompatActivity() {
 
     private fun crearEncabezadoGastos() {
         var añoInicio = 2021
-        while (añoInicio < 2025) {
+        while (añoInicio < 2026) {
             encabezadoGastos.add("  ${" ABRIL  "} $añoInicio  ")
             encabezadoGastos.add("  ${" MAYO  "} $añoInicio  ")
             encabezadoGastos.add("  ${" JUNIO  "} $añoInicio  ")
@@ -162,7 +179,7 @@ class MainActivity9 : AppCompatActivity() {
 
     private fun crearEncabezadoCompras() {
         var añoInicio = 2021
-        while (añoInicio < 2025){
+        while (añoInicio < 2026){
             encabezadoCompras.add("  ${" ABRIL  "} $añoInicio  ")
             encabezadoCompras.add("  ${" MAYO  "} $añoInicio  ")
             encabezadoCompras.add("  ${" JUNIO  "} $añoInicio  ")

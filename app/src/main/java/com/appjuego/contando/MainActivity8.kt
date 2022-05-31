@@ -13,11 +13,17 @@ class MainActivity8 : AppCompatActivity() {
     var listaGastoMensuales : ArrayList<String> = ArrayList()
     var listaAlquileresMensuales : ArrayList<String> = ArrayList()
     var proyeccion : String = ""
+    var listaIngresoBruto : ArrayList<String> = ArrayList()
+    var mesInicial = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main8)
         val bundleProyeccion = intent.extras
+        val bundleVentas = intent.extras
+        val bundleMesIni = intent.extras
+        listaIngresoBruto = bundleVentas?.getStringArrayList ("keyValoresListaIngresoBruto")!!
+        mesInicial = bundleMesIni?.getInt("keyMesInicial")!!
         proyeccion = bundleProyeccion!!.getString("keyValorProyeccion")!!
         siguiente ()
     }
@@ -39,6 +45,10 @@ class MainActivity8 : AppCompatActivity() {
                 val bundleGasto = Bundle()
                 val bundleAlquiler = Bundle()
                 val bundleProyeccion = Bundle()
+                val bundleListaIngresoBruto = Bundle()
+                val bundleMesIni = Bundle()
+                bundleListaIngresoBruto.putStringArrayList("keyValoresListaIngresoBruto",listaIngresoBruto)
+                bundleMesIni.putInt("keyMesInicial",mesInicial)
                 bundleProyeccion.putString("keyValorProyeccion",proyeccion)
                 bundleCompras.putStringArrayList("keyValoresCompras",listaComprasMensuales)
                 bundleGasto.putStringArrayList("keyValoresGastos",listaGastoMensuales)
@@ -48,6 +58,8 @@ class MainActivity8 : AppCompatActivity() {
                 ventana.putExtras(bundleGasto)
                 ventana.putExtras(bundleAlquiler)
                 ventana.putExtras(bundleProyeccion)
+                ventana.putExtras(bundleListaIngresoBruto)
+                ventana.putExtras(bundleMesIni)
                 startActivity(ventana)
             }
         }
@@ -110,7 +122,7 @@ class MainActivity8 : AppCompatActivity() {
             }*/
         }
         if (alquiler_abril.text.toString().isEmpty()){
-            compra_junio.setError("Introducir Alquiler De Abril")
+            alquiler_abril.setError("Introducir Alquiler De Abril")
             valido = false
         }else{
             /*if (aporte_patronales.text.toString().toDouble() > 100){
@@ -119,7 +131,7 @@ class MainActivity8 : AppCompatActivity() {
             }*/
         }
         if (alquiler_mayo.text.toString().isEmpty()){
-            compra_junio.setError("Introducir Alquiler De Mayo")
+            alquiler_mayo.setError("Introducir Alquiler De Mayo")
             valido = false
         }else{
             /*if (aporte_patronales.text.toString().toDouble() > 100){
@@ -128,22 +140,13 @@ class MainActivity8 : AppCompatActivity() {
             }*/
         }
         if (alquiler_junio.text.toString().isEmpty()){
-            compra_junio.setError("Introducir Compra General De Junio")
+            alquiler_junio.setError("Introducir Compra General De Junio")
             valido = false
         }else{
             /*if (aporte_patronales.text.toString().toDouble() > 100){
                 aporte_patronales.setError("Porcentaje Invalido")
                 valido = false
             }*/
-        }
-        if (tasa_proyeccion_salida.text.toString().isEmpty()){
-            tasa_proyeccion_salida.setError("Introducir Tasa Proyeccion")
-            valido = false
-        }else{
-            if (tasa_proyeccion_salida.text.toString().toDouble() > 100){
-                tasa_proyeccion_salida.setError("Tasa De Proyeccion Invalida")
-                valido = false
-            }
         }
         return valido
     }

@@ -11,24 +11,75 @@ import kotlinx.android.synthetic.main.activity_main9.*
 
 class MainActivity7 : AppCompatActivity() {
     var proyeccion:String = ""
+    var datosNecesarios : ArrayList<String> = ArrayList()
+    var listaIngresoBruto : ArrayList<String> = ArrayList()
+    var mesInicial = 0
+    var listaTotal : ArrayList<String> = ArrayList()
+    var listaComprasMensuales : ArrayList<String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main7)
         val bundleProyeccion = intent.extras
+        val bundleVentas = intent.extras
+        val bundleMesIni = intent.extras
+        val bundleTotal = intent.extras
+        val bundleCompraMensual = intent.extras
+        listaTotal = bundleTotal?.getStringArrayList ("keyValoresTotalGastos")!!
+        listaComprasMensuales = bundleCompraMensual?.getStringArrayList("keyValoresCompraMensual")!!
+        listaIngresoBruto = bundleVentas?.getStringArrayList ("keyValoresListaIngresoBruto")!!
+        mesInicial = bundleMesIni?.getInt("keyMesInicial")!!
         proyeccion = bundleProyeccion?.getString("keyValorProyeccion")!!
-        Toast.makeText(this, proyeccion, Toast.LENGTH_SHORT).show()
-        CargarDatos()
         siguiente()
+    }
+
+    private fun obtenerDatos() {
+        datosNecesarios.add(intereses_comercial_abril.text.toString())
+        datosNecesarios.add(intereses_comercial_mayo.text.toString())
+        datosNecesarios.add(intereses_comercial_junio.text.toString())
+        datosNecesarios.add(venta_activo_fijo_abril.text.toString())
+        datosNecesarios.add(venta_activo_fijo_mayo.text.toString())
+        datosNecesarios.add(venta_activo_fijo_junio.text.toString())
+        datosNecesarios.add(alquiler_abril_iva.text.toString())
+        datosNecesarios.add(alquiler_mayo_iva.text.toString())
+        datosNecesarios.add(alquiler_junio_iva.text.toString())
+        datosNecesarios.add(intereses_comercial_abril_salida.text.toString())
+        datosNecesarios.add(intereses_comercial_mayo_salida.text.toString())
+        datosNecesarios.add(intereses_comercial_junio_salida.text.toString())
+        datosNecesarios.add(compra_activo_fijo_abril.text.toString())
+        datosNecesarios.add(compra_activo_fijo_mayo.text.toString())
+        datosNecesarios.add(compra_activo_fijo_junio.text.toString())
+        datosNecesarios.add(subsidio_abril.text.toString())
+        datosNecesarios.add(subsidio_mayo.text.toString())
+        datosNecesarios.add(subsidio_junio.text.toString())
     }
 
     private fun siguiente() {
         siguiente_iva.setOnClickListener {
-            val bundleProyeccion = Bundle()
-            bundleProyeccion.putString("keyValorProyeccion",proyeccion)
-            val ventana = Intent(this, MainActivity10:: class.java)
-            ventana.putExtras(bundleProyeccion)
-            startActivity(ventana)
+            if (esValido()){
+                obtenerDatos()
+                val bundleProyeccion = Bundle()
+                val bundleDatosNecesarios = Bundle()
+                val bundleListaIngresoBruto = Bundle()
+                val bundleMesIni = Bundle()
+                val bundleCompraMensual = Bundle()
+                val bundleTotal = Bundle()
+                bundleTotal.putStringArrayList("keyValoresTotalGastos",listaTotal)
+                bundleCompraMensual.putStringArrayList("keyValoresCompraMensual",listaComprasMensuales)
+                bundleListaIngresoBruto.putStringArrayList("keyValoresListaIngresoBruto",listaIngresoBruto)
+                bundleMesIni.putInt("keyMesInicial",mesInicial)
+                bundleDatosNecesarios.putStringArrayList("keyValorDatosNecesarios",datosNecesarios)
+                bundleProyeccion.putString("keyValorProyeccion",proyeccion)
+                val ventana = Intent(this, MainActivity10:: class.java)
+                ventana.putExtras(bundleTotal)
+                ventana.putExtras(bundleCompraMensual)
+                ventana.putExtras(bundleDatosNecesarios)
+                ventana.putExtras(bundleProyeccion)
+                ventana.putExtras(bundleListaIngresoBruto)
+                ventana.putExtras(bundleMesIni)
+                startActivity(ventana)
+            }
+
         }
     }
 
@@ -55,7 +106,7 @@ class MainActivity7 : AppCompatActivity() {
             valido = false
         }
         if (intereses_comercial_junio_salida.text.toString().isEmpty()){
-            intereses_comercial_junio.setError("Introducir Interes Comercial Junio")
+            intereses_comercial_junio_salida.setError("Introducir Interes Comercial Junio")
             valido = false
         }
         if (venta_activo_fijo_abril.text.toString().isEmpty()){
@@ -83,41 +134,31 @@ class MainActivity7 : AppCompatActivity() {
             valido = false
         }
         if (compra_activo_fijo_abril.text.toString().isEmpty()){
-            alquiler_abril_iva.setError("Introducir Activo Fijo Abril")
+            compra_activo_fijo_abril.setError("Introducir Activo Fijo Abril")
             valido = false
         }
         if (compra_activo_fijo_mayo.text.toString().isEmpty()){
-            alquiler_mayo_iva.setError("Introducir Activo Fijo Mayo")
+            compra_activo_fijo_mayo.setError("Introducir Activo Fijo Mayo")
             valido = false
         }
         if (compra_activo_fijo_junio.text.toString().isEmpty()){
-            alquiler_junio_iva.setError("Introducir Activo Fijo Junio")
+            compra_activo_fijo_junio.setError("Introducir Activo Fijo Junio")
             valido = false
         }
         if (subsidio_abril.text.toString().isEmpty()){
-            alquiler_abril_iva.setError("Introducir Subsidio Abril")
+            subsidio_abril.setError("Introducir Subsidio Abril")
             valido = false
         }
         if (subsidio_mayo.text.toString().isEmpty()){
-            alquiler_mayo_iva.setError("Introducir Subsidio Mayo")
+            subsidio_mayo.setError("Introducir Subsidio Mayo")
             valido = false
         }
         if (subsidio_junio.text.toString().isEmpty()){
-            alquiler_junio_iva.setError("Introducir Subsidio Junio")
+            subsidio_junio.setError("Introducir Subsidio Junio")
             valido = false
         }
         return valido
     }
 
-    private fun CargarDatos (){
-        var listaMes = listOf("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE")
-        val adaptador = ArrayAdapter(this,android.R.layout.simple_spinner_item,listaMes)
-        lista_mes_salida.adapter = adaptador
-        lista_mes_entrada.adapter = adaptador
-        var listaAño = listOf("2021","2022","2023","2024","2025" ,"2026")
-        val adapterAÑo = ArrayAdapter(this,android.R.layout.simple_spinner_item,listaAño)
-        lista_año_entrada.adapter = adapterAÑo
-        lista_año_salida.adapter = adapterAÑo
-    }
 }
 

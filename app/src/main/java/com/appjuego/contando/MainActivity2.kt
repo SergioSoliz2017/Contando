@@ -102,6 +102,7 @@ class MainActivity2 : AppCompatActivity() {
 
     private fun redondear(numero: Double ): String {
         val num = numero
+
         val df = DecimalFormat("#.##")
         df.roundingMode = RoundingMode.CEILING
 

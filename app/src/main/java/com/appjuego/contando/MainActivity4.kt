@@ -4,7 +4,11 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main4.*
+
+import java.math.RoundingMode
 import java.text.DecimalFormat
+
+
 //aqui esta la lista que se tiene que mandar
 class MainActivity4 : AppCompatActivity() {
 
@@ -16,6 +20,7 @@ class MainActivity4 : AppCompatActivity() {
     var listaFila : ArrayList<ArrayList<String>> = ArrayList()
     var porcentajeProyeccion : Double = 0.0
     var tasaProyeccion : Double = 0.0
+    var listaIngresoBruto : ArrayList <String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +39,7 @@ class MainActivity4 : AppCompatActivity() {
         tasaProyeccion = arregloProyecTasa [1].toDouble()
         mesInicial  = arregloMesAño!![0].toInt()
         var distancia : Int = calcularDistanciaMeses ()
+        listaIngresoBruto.add("VENTAS")
         cargarDatosMes1 ()
         cargarDatosMes2()
         cargarDatoMes3()
@@ -44,12 +50,16 @@ class MainActivity4 : AppCompatActivity() {
     private fun siguiente(){
         boton_suedos_salarios.setOnClickListener {
             val bundleMesAño = Bundle()
-            val bundleListaProyeccion = Bundle()
+            val bundleListaIngresoBruto = Bundle()
             val bundleProyeccion = Bundle()
-            bundleListaProyeccion.putSerializable("keyValoresListaProyeccion",listaFila)
+            val bundleMesIni = Bundle()
+            bundleListaIngresoBruto.putStringArrayList("keyValoresListaIngresoBruto",listaIngresoBruto)
             bundleMesAño.putStringArray("keyValoresMesAño", arregloMesAño)
             bundleProyeccion.putString ("keyValorProyeccion",porcentajeProyeccion.toString())
+            bundleMesIni.putInt("keyMesInicial",arregloMesAño!![0].toInt())
             val ventana = Intent(this, MainActivity5:: class.java)
+            ventana.putExtras(bundleListaIngresoBruto)
+            ventana.putExtras(bundleMesIni)
             ventana.putExtras(bundleProyeccion)
             ventana.putExtras(bundleMesAño)
             startActivity(ventana)
@@ -66,6 +76,7 @@ class MainActivity4 : AppCompatActivity() {
             listaCol.add ((ventaUnidades).toInt().toString())
             listaCol.add (redondear(precioUnidades))
             listaCol.add ((precioUnidades*ventaUnidades).toInt().toString())
+            listaIngresoBruto.add((precioUnidades*ventaUnidades).toInt().toString())
             listaCol.add ((precioUnidades*ventaUnidades).toInt().toString())
             listaCol.add (0.toString())
             listaCol.add (0.toString())
@@ -103,6 +114,7 @@ class MainActivity4 : AppCompatActivity() {
             listaCol.add (0.toString())
         }
         listaFila.add(listaCol)
+        listaIngresoBruto.add(arregloAbril!![2])
     }
 
     private fun cargarDatosMes2 (){
@@ -120,6 +132,7 @@ class MainActivity4 : AppCompatActivity() {
             listaCol.add (0.toString())
         }
         listaFila.add(listaCol)
+        listaIngresoBruto.add(arregloMayo!![2])
     }
 
     private fun cargarDatoMes3 (){
@@ -137,6 +150,7 @@ class MainActivity4 : AppCompatActivity() {
             listaCol.add (0.toString())
         }
         listaFila.add(listaCol)
+        listaIngresoBruto.add(arregloJunio!![2])
     }
 
     private fun escogerMes () : String{
@@ -206,10 +220,9 @@ class MainActivity4 : AppCompatActivity() {
         return mesEscogido
     }
 
-    private fun redondear(numero: Double ): String {
-        val num = numero
+    private fun redondear(numero: Double): String {
+        var num = numero
         val df = DecimalFormat("#.##")
         return df.format(num)
     }
-
 }

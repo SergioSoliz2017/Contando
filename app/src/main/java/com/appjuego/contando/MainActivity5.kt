@@ -10,11 +10,17 @@ class MainActivity5 : AppCompatActivity() {
 
     var arregloMesAño: Array<String>? = null
     var proyeccion : String = ""
+    var listaIngresoBruto : ArrayList<String> = ArrayList()
+    var mesInicial = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main5)
         val bundleMesAño = intent.extras
+        val bundleVentas = intent.extras
+        val bundleMesIni = intent.extras
+        listaIngresoBruto = bundleVentas?.getStringArrayList ("keyValoresListaIngresoBruto")!!
+        mesInicial = bundleMesIni?.getInt("keyMesInicial")!!
         arregloMesAño = bundleMesAño?.getStringArray("keyValoresMesAño")!!
         val bundleProyeccion = intent.extras
         proyeccion = bundleProyeccion!!.getString("keyValorProyeccion")!!
@@ -27,11 +33,17 @@ class MainActivity5 : AppCompatActivity() {
                 val bundleMesAño = Bundle()
                 val bundleSalarios = Bundle()
                 val bundleProyeccion = Bundle()
+                val bundleListaIngresoBruto = Bundle()
+                val bundleMesIni = Bundle()
+                bundleListaIngresoBruto.putStringArrayList("keyValoresListaIngresoBruto",listaIngresoBruto)
+                bundleMesIni.putInt("keyMesInicial",mesInicial)
                 val arregloSalarios = arrayOf(aporte_patronales.text.toString(),incremento_salarial.text.toString(),nro_trabajadores.text.toString(),sueldo_individual.text.toString())
                 bundleSalarios.putStringArray("keyValoresSalarios",arregloSalarios)
                 bundleMesAño.putStringArray("keyValoresMesAño", arregloMesAño)
                 bundleProyeccion.putString("keyValorProyeccion",proyeccion)
                 val ventana = Intent(this, MainActivity6:: class.java)
+                ventana.putExtras(bundleListaIngresoBruto)
+                ventana.putExtras(bundleMesIni)
                 ventana.putExtras(bundleProyeccion)
                 ventana.putExtras(bundleMesAño)
                 ventana.putExtras(bundleSalarios)

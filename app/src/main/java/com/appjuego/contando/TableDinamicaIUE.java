@@ -1,16 +1,13 @@
 package com.appjuego.contando;
 
 import android.content.Context;
-import android.view.Gravity;
-import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class TableDinamica {
-
+public class TableDinamicaIUE {
     private TableLayout tableLayout;
     private Context context;
     private String [] header;
@@ -18,7 +15,7 @@ public class TableDinamica {
     private TableRow tableRow;
     private TextView txtCell;
 
-    public TableDinamica(TableLayout tableLayout , Context context) {
+    public TableDinamicaIUE (TableLayout tableLayout , Context context) {
         this.tableLayout = tableLayout;
         this.context = context;
     }

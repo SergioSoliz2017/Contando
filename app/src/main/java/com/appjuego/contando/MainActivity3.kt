@@ -26,77 +26,17 @@ class MainActivity3 : AppCompatActivity() {
         arregloAbril= bundleAbril?.getStringArray("keyValoresAbril")!!
         arregloMayo = bundleMayo?.getStringArray("keyValoresMayo")!!
         arregloJunio = bundleJunio?.getStringArray("keyValoresJunio")!!
-        CargarMeses ()
-        CargarAños ()
         siguiente ()
 
     }
-
+//modificar aqui
     private fun siguiente () {
-        var mesInicioSelec: String = "error"
-        var mesFinalSelec: String = "error"
-        var añoInicioSelec: String = "error"
-        var añoFinalSelec: String = "error"
-        var posMesIni: Int = 0
-        var posMesFin: Int = 0
-        listaMesInicio.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                mesInicioSelec = listaMes[position]
-                posMesIni = position
-            }
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
-        }
-        listaMesFinal.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                mesFinalSelec = listaMes[position]
-                posMesFin = position
-            }
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
-        }
-        listaAñoInicio.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                añoInicioSelec = listaAño[position]
-            }
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
-        }
-        listaAñoFinal.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                añoFinalSelec = listaAño[position]
-            }
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
-        }
+        var mesInicioSelec: String = "Abril"
+        var mesFinalSelec: String = "Marzo"
+        var añoInicioSelec: String = "2021"
+        var añoFinalSelec: String = "2026"
+        var posMesIni: Int = 3
+        var posMesFin: Int = 2
         SiguienteProyeccion.setOnClickListener {
             if (porcentajeValido()) {
                 if (validar(posMesIni, posMesFin, añoInicioSelec, añoFinalSelec)) {
@@ -151,46 +91,31 @@ class MainActivity3 : AppCompatActivity() {
 
     private fun validar(posMesIni: Int, posMesFin: Int, añoInicioSelec: String, añoFinalSelec: String): Boolean {
         var valido = true
-        if (añoFinalSelec>=añoInicioSelec){
-            if (añoInicioSelec.toInt() == 2021){
-                if (posMesIni < 3){
+        if (añoFinalSelec > (añoInicioSelec)) {
+            if (añoInicioSelec.toInt() == 2021) {
+                if (posMesIni < 3) {
                     Toast.makeText(this, "Mes Inicio Invalido", Toast.LENGTH_SHORT).show()
                     valido = false
-                }else{
-                    if (añoFinalSelec == añoInicioSelec){
-                        if (posMesFin<=posMesIni){
-                          Toast.makeText(this, "Mes Final Invalido", Toast.LENGTH_SHORT).show()
-                          valido = false
+                } else {
+                    if (añoFinalSelec == añoInicioSelec) {
+                        if (posMesFin <= posMesIni) {
+                            Toast.makeText(this, "Mes Final Invalido", Toast.LENGTH_SHORT).show()
+                            valido = false
                         }
                     }
                 }
-            }else{
-                if (añoFinalSelec == añoInicioSelec){
-                    if (posMesFin<=posMesIni){
-                        Toast.makeText(this, "Mes Final Invalido", Toast.LENGTH_SHORT).show()
-                        valido = false
-                    }
+            }
+            if (añoFinalSelec.toInt() == 2022) {
+                if (posMesFin < 2) {
+                    Toast.makeText(this, "Mes Final Invalido", Toast.LENGTH_SHORT).show()
+                    valido = false
                 }
             }
-        }else{
-            valido = false
+        } else {
             Toast.makeText(this, "Año Final Invalido", Toast.LENGTH_SHORT).show()
-        }
+            valido = false
+            }
         return valido
-    }
-
-    private fun CargarMeses (){
-        listaMes = listOf("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE")
-        val adaptador = ArrayAdapter(this,android.R.layout.simple_spinner_item,listaMes)
-        listaMesInicio.adapter = adaptador
-        listaMesFinal.adapter = adaptador
-    }
-
-    private fun CargarAños (){
-        listaAño = listOf("2021","2022","2023","2024","2025","2026","2027","2028","2029","2030","2031","2032")
-        val adaptador = ArrayAdapter(this,android.R.layout.simple_spinner_item,listaAño)
-        listaAñoInicio.adapter = adaptador
-        listaAñoFinal.adapter = adaptador
     }
 
     private fun obtenerProbabilidad (valor : Double) : Double{
