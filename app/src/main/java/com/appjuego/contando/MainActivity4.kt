@@ -21,6 +21,7 @@ class MainActivity4 : AppCompatActivity() {
     var porcentajeProyeccion : Double = 0.0
     var tasaProyeccion : Double = 0.0
     var listaIngresoBruto : ArrayList <String> = ArrayList()
+    var listaRec : ArrayList <String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,11 +54,14 @@ class MainActivity4 : AppCompatActivity() {
             val bundleListaIngresoBruto = Bundle()
             val bundleProyeccion = Bundle()
             val bundleMesIni = Bundle()
+            val bundleRec = Bundle()
+            bundleRec.putStringArrayList("keyRecuperacion",listaRec)
             bundleListaIngresoBruto.putStringArrayList("keyValoresListaIngresoBruto",listaIngresoBruto)
             bundleMesAño.putStringArray("keyValoresMesAño", arregloMesAño)
             bundleProyeccion.putString ("keyValorProyeccion",porcentajeProyeccion.toString())
             bundleMesIni.putInt("keyMesInicial",arregloMesAño!![0].toInt())
             val ventana = Intent(this, MainActivity5:: class.java)
+            ventana.putExtras(bundleRec)
             ventana.putExtras(bundleListaIngresoBruto)
             ventana.putExtras(bundleMesIni)
             ventana.putExtras(bundleProyeccion)
@@ -106,13 +110,11 @@ class MainActivity4 : AppCompatActivity() {
         listaCol.add (arregloAbril!![1])
         listaCol.add (arregloAbril!![2])
         listaCol.add (arregloAbril!![2])
-        if (listaCol.get(0) == "ABRIL       " && arregloMesAño!![4]!!.toInt() == 2021 || listaCol.get(0) == "MAYO        " && arregloMesAño!![4]!!.toInt() == 2021 || listaCol.get(0) == "JUNIO       " && arregloMesAño!![4]!!.toInt() == 2021){
-            listaCol.add (arregloAbril!![5])
-            listaCol.add (arregloAbril!![4])
-        }else{
-            listaCol.add (0.toString())
-            listaCol.add (0.toString())
-        }
+        listaCol.add (arregloAbril!![5])
+        listaCol.add (arregloAbril!![4])
+
+        listaRec.add(arregloAbril!![5])
+        listaRec.add(arregloAbril!![4])
         listaFila.add(listaCol)
         listaIngresoBruto.add(arregloAbril!![2])
     }
@@ -124,13 +126,11 @@ class MainActivity4 : AppCompatActivity() {
         listaCol.add (arregloMayo!![1])
         listaCol.add (arregloMayo!![2])
         listaCol.add (arregloMayo!![2])
-        if (listaCol.get(0) == "ABRIL       " && arregloMesAño!![4]!!.toInt() == 2021 || listaCol.get(0) == "MAYO        " && arregloMesAño!![4]!!.toInt() == 2021 || listaCol.get(0) == "JUNIO       " && arregloMesAño!![4]!!.toInt() == 2021){
-            listaCol.add (arregloMayo!![5])
-            listaCol.add (arregloMayo!![4])
-        }else{
-            listaCol.add (0.toString())
-            listaCol.add (0.toString())
-        }
+        listaCol.add (arregloMayo!![5])
+        listaCol.add (arregloMayo!![4])
+
+        listaRec.add(arregloMayo!![5])
+        listaRec.add(arregloMayo!![4])
         listaFila.add(listaCol)
         listaIngresoBruto.add(arregloMayo!![2])
     }
@@ -142,13 +142,11 @@ class MainActivity4 : AppCompatActivity() {
         listaCol.add (arregloJunio!![1])
         listaCol.add (arregloJunio!![2])
         listaCol.add (arregloJunio!![2])
-        if (listaCol.get(0) == "ABRIL       " && arregloMesAño!![4]!!.toInt() == 2021 || listaCol.get(0) == "MAYO        " && arregloMesAño!![4]!!.toInt() == 2021 || listaCol.get(0) == "JUNIO       " && arregloMesAño!![4]!!.toInt() == 2021){
-            listaCol.add (arregloJunio!![5])
-            listaCol.add (arregloJunio!![4])
-        }else{
-            listaCol.add (0.toString())
-            listaCol.add (0.toString())
-        }
+        listaCol.add (arregloJunio!![5])
+        listaCol.add (arregloJunio!![4])
+
+        listaRec.add(arregloJunio!![5])
+        listaRec.add(arregloJunio!![4])
         listaFila.add(listaCol)
         listaIngresoBruto.add(arregloJunio!![2])
     }

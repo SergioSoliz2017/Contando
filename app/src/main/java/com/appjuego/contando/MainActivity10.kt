@@ -19,6 +19,11 @@ class MainActivity10 : AppCompatActivity() {
     var ventasFinales : ArrayList<String> = ArrayList()
     var comprasFinales : ArrayList<String> = ArrayList()
     var valoresIt : ArrayList<ArrayList<String>> = ArrayList()
+    var listaRec : ArrayList <String> = ArrayList()
+    var listaAporteSalario : ArrayList<ArrayList<String>> = ArrayList()
+    var compras : ArrayList <String> = ArrayList()
+    var gastosOperativos : ArrayList <String> = ArrayList()
+    var iva : ArrayList <String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +34,10 @@ class MainActivity10 : AppCompatActivity() {
         val bundleDatos = intent.extras
         val bundleTotal = intent.extras
         val bundleCompraMensual = intent.extras
+        val bundleRec = intent.extras
+        val bundleAportesSalario = intent.extras
+        listaAporteSalario = bundleAportesSalario?.getSerializable("keyAporteSalario") as ArrayList<ArrayList<String>>
+        listaRec = bundleRec?.getStringArrayList("keyRecuperacion")!!
         listaTotal = bundleTotal?.getStringArrayList ("keyValoresTotalGastos")!!
         listaComprasMensuales = bundleCompraMensual?.getStringArrayList("keyValoresCompraMensual")!!
         datosNecesarios = bundleDatos?.getStringArrayList ("keyValorDatosNecesarios")!!
@@ -45,10 +54,25 @@ class MainActivity10 : AppCompatActivity() {
             var bundlesCompras = Bundle()
             var bundlesVenta = Bundle()
             var bundleIt = Bundle()
+            val bundleRec = Bundle()
+            val bundleAportesSalarios = Bundle()
+            val bundleComprasActivos = Bundle()
+            val bundleGastosOperativos = Bundle()
+            val bundleIva = Bundle()
+            bundleIva.putStringArrayList("keyIva", iva)
+            bundleGastosOperativos.putStringArrayList("keyGastosOperativos", gastosOperativos)
+            bundleComprasActivos.putStringArrayList("keyComprasActivo",compras)
+            bundleAportesSalarios.putSerializable("keyAporteSalario",listaAporteSalario)
+            bundleRec.putStringArrayList("keyRecuperacion",listaRec)
             bundleIt.putSerializable("keyIt",valoresIt)
             bundlesVenta.putStringArrayList("keyVenta",ventasFinales)
             bundlesCompras.putStringArrayList("keyCompra",comprasFinales)
             val ventana = Intent(this, MainActivity11:: class.java)
+            ventana.putExtras(bundleIva)
+            ventana.putExtras(bundleGastosOperativos)
+            ventana.putExtras(bundleComprasActivos)
+            ventana.putExtras(bundleAportesSalarios)
+            ventana.putExtras(bundleRec)
             ventana.putExtras(bundleIt)
             ventana.putExtras(bundlesCompras)
             ventana.putExtras(bundlesVenta)
@@ -86,12 +110,13 @@ class MainActivity10 : AppCompatActivity() {
             saldoFisco.add(redondear(valor))
             cont ++
         }
+        iva = saldoFisco
         listaGeneral.add(saldoFisco)
     }
 
     private fun creditoFiscalPeriodo() {
         val creditoFiscal : ArrayList <String> = ArrayList()
-        creditoFiscal.add("DEBITO FISCAL DEL PERIODO (13%)    ")
+        creditoFiscal.add("CREDITO FISCAL DEL PERIODO (13%)    ")
         var cont = 1;
         while (cont <= tamTabla){
             var valor = listaGeneral.get(12).get(cont).toDouble() * 0.13
@@ -128,6 +153,7 @@ class MainActivity10 : AppCompatActivity() {
             compraMercaderia.add(redondear(valor))
             cont++
         }
+        gastosOperativos = compraMercaderia
         listaGeneral.add(compraMercaderia)
     }
 
@@ -185,6 +211,7 @@ class MainActivity10 : AppCompatActivity() {
             compraMercaderia.add(redondear(valor))
             cont++
         }
+        compras = compraMercaderia
         listaGeneral.add(compraMercaderia)
     }
 

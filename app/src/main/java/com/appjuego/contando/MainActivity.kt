@@ -23,16 +23,16 @@ class MainActivity : AppCompatActivity() {
                             if(filtrador(recup60junio.text.toString().toDouble(),recup30junio.text.toString().toDouble())){
                                 porfinlogrado()
                             }else{
-                                Toast.makeText(applicationContext, "Solo ponga un porcentaje en junio", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(applicationContext, "Por favor llene los campos correctamente", Toast.LENGTH_SHORT).show()
                             }
                         }else{
-                            Toast.makeText(applicationContext, "Solo ponga un porcentaje en mayo", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(applicationContext, "Por favor llene los campos correctamente", Toast.LENGTH_SHORT).show()
                         }
                     }else{
-                        Toast.makeText(applicationContext, "Solo ponga un porcentaje en abril", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, "Por favor llene los campos correctamente", Toast.LENGTH_SHORT).show()
                     }
                 }else{
-                    Toast.makeText(applicationContext, "Porcentajes incorrectos", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Porcentaje incorrecto", Toast.LENGTH_SHORT).show()
                 }
             }else{
                 Toast.makeText(applicationContext, "Llene los campos", Toast.LENGTH_SHORT).show()
@@ -122,8 +122,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun filtrador(a: Double, b: Double): Boolean{
         var sePudo = true
-        //if((a.equals(0)) && (b.equals(0)) || ((!a.equals(0)) && (!b.equals(0)))){
-        //if((a==0.0 && b==0.0) || (a!=0.0 && b!=0.0)){
         if(a!=0.0 && b!=0.0){
             sePudo = false
         }
@@ -148,5 +146,4 @@ class MainActivity : AppCompatActivity() {
         ventana.putExtras(bundle)
         startActivity(ventana)
     }
-
 }

@@ -29,7 +29,7 @@ class MainActivity3 : AppCompatActivity() {
         siguiente ()
 
     }
-//modificar aqui
+
     private fun siguiente () {
         var mesInicioSelec: String = "Abril"
         var mesFinalSelec: String = "Marzo"
@@ -127,6 +127,5 @@ class MainActivity3 : AppCompatActivity() {
         }
         return probabilidad
     }
-
 }
 

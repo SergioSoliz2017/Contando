@@ -18,6 +18,11 @@ class MainActivity6 : AppCompatActivity() {
     var proyeccion : String = ""
     var listaIngresoBruto : ArrayList<String> = ArrayList()
     var mesInicial = 0
+    var listaRec : ArrayList <String> = ArrayList()
+    var sueldos : ArrayList<String> = ArrayList()
+    var retroactivoSalarial : ArrayList<String> = ArrayList()
+    var retroactivoAportes : ArrayList<String> = ArrayList()
+    var patronales : ArrayList<String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +32,8 @@ class MainActivity6 : AppCompatActivity() {
         val bundleProyeccion = intent.extras
         val bundleVentas = intent.extras
         val bundleMesIni = intent.extras
+        val bundleRec = intent.extras
+        listaRec = bundleRec?.getStringArrayList("keyRecuperacion")!!
         listaIngresoBruto = bundleVentas?.getStringArrayList ("keyValoresListaIngresoBruto")!!
         mesInicial = bundleMesIni?.getInt("keyMesInicial")!!
         proyeccion = bundleProyeccion!!.getString("keyValorProyeccion")!!
@@ -55,10 +62,21 @@ class MainActivity6 : AppCompatActivity() {
             val bundleProyeccion = Bundle()
             val bundleListaIngresoBruto = Bundle()
             val bundleMesIni = Bundle()
+            val bundleRec = Bundle()
+            val bundleAportesSalarios = Bundle()
+            val listaAporteSalario : ArrayList<ArrayList<String>> = ArrayList()
+            listaAporteSalario.add(sueldos)
+            listaAporteSalario.add(patronales)
+            listaAporteSalario.add(retroactivoSalarial)
+            listaAporteSalario.add(retroactivoAportes)
+            bundleAportesSalarios.putSerializable("keyAporteSalario",listaAporteSalario)
+            bundleRec.putStringArrayList("keyRecuperacion",listaRec)
             bundleListaIngresoBruto.putStringArrayList("keyValoresListaIngresoBruto",listaIngresoBruto)
             bundleMesIni.putInt("keyMesInicial",mesInicial)
             bundleProyeccion.putString("keyValorProyeccion",proyeccion)
             val ventana = Intent(this, MainActivity8:: class.java)
+            ventana.putExtras(bundleAportesSalarios)
+            ventana.putExtras(bundleRec)
             ventana.putExtras(bundleProyeccion)
             ventana.putExtras(bundleListaIngresoBruto)
             ventana.putExtras(bundleMesIni)
@@ -120,10 +138,11 @@ class MainActivity6 : AppCompatActivity() {
         var sueldosSalariosConIncremento: Double = sueldoIndividualIncrementado * numeroTrabajadores
         var aportePatronal1: Double = sueldosSalariosSinIncremento * aportePatronal
         var aportePatronal2: Double = sueldosSalariosConIncremento * aportePatronal
-        //val aportePatronal3 : Double = sueldosSalariosConIncremento * aportePatronal
         listaValoresAportesPatronales!!.add(aportePatronal1.toInt().toString())
         listaValoresAportesPatronales!!.add(aportePatronal2.toInt().toString())
         listaValoresAportesPatronales!!.add(aportePatronal2.toInt().toString())
+        sueldos.add((sueldoIndividualSinIncremento * numeroTrabajadores).toInt().toString())
+        patronales.add(aportePatronal1.toInt().toString())
         var i: Int = 3
         while (i < listaEncabezadosAportesPatronales!!.size) {
             aportePatronal1 = aportePatronal2
@@ -134,6 +153,8 @@ class MainActivity6 : AppCompatActivity() {
             listaValoresAportesPatronales!!.add(aportePatronal1.toInt().toString())
             listaValoresAportesPatronales!!.add(aportePatronal2.toInt().toString())
             listaValoresAportesPatronales!!.add(aportePatronal2.toInt().toString())
+            sueldos.add((sueldoIndividualSinIncremento * numeroTrabajadores).toInt().toString())
+            patronales.add(aportePatronal1.toInt().toString())
             i = i + 3
         }
 
@@ -148,6 +169,7 @@ class MainActivity6 : AppCompatActivity() {
         var retroactivo : Double = sueldosSalariosSinIncremento * incrementoSalarial
         var numeroMeses : Int = 4
         var retroactivoMeses : Double = retroactivo * numeroMeses
+        retroactivoSalarial.add(retroactivoMeses.toInt().toString())
         listaValoresRetroactivoSalarial!!.add(retroactivo.toInt().toString())
         listaValoresRetroactivoSalarial!!.add(numeroMeses.toString())
         listaValoresRetroactivoSalarial!!.add(retroactivoMeses.toInt().toString())
@@ -156,6 +178,7 @@ class MainActivity6 : AppCompatActivity() {
         while (i < listaEncabezadosRetroactivoSalarial!!.size){
             retroactivo = sueldoSalarial * incrementoSalarial
             retroactivoMeses = retroactivo * numeroMeses
+            retroactivoSalarial.add(retroactivoMeses.toInt().toString())
             listaValoresRetroactivoSalarial!!.add(retroactivo.toInt().toString())
             listaValoresRetroactivoSalarial!!.add(numeroMeses.toString())
             listaValoresRetroactivoSalarial!!.add(retroactivoMeses.toInt().toString())
@@ -172,6 +195,7 @@ class MainActivity6 : AppCompatActivity() {
             var retroactivo : Double = reactivoSalarial * aportePatronal
             val numeroMeses : Int = 4
             val aportesPatronalesMes : Int = redondear((retroactivo * numeroMeses).toDouble())
+            retroactivoAportes.add(aportesPatronalesMes.toInt().toString())
             retroactivo = redondear(retroactivo).toDouble()
             listaValoresRetroactivoPatronal!!.add(retroactivo.toInt().toString())
             listaValoresRetroactivoPatronal!!.add(numeroMeses.toString())
@@ -198,5 +222,4 @@ class MainActivity6 : AppCompatActivity() {
         }
         return valorEntero
     }
-
 }

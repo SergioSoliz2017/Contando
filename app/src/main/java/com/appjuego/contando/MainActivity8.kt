@@ -15,6 +15,8 @@ class MainActivity8 : AppCompatActivity() {
     var proyeccion : String = ""
     var listaIngresoBruto : ArrayList<String> = ArrayList()
     var mesInicial = 0
+    var listaRec : ArrayList <String> = ArrayList()
+    var listaAporteSalario : ArrayList<ArrayList<String>> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +24,10 @@ class MainActivity8 : AppCompatActivity() {
         val bundleProyeccion = intent.extras
         val bundleVentas = intent.extras
         val bundleMesIni = intent.extras
+        val bundleRec = intent.extras
+        val bundleAportesSalario = intent.extras
+        listaAporteSalario = bundleAportesSalario?.getSerializable("keyAporteSalario") as ArrayList<ArrayList<String>>
+        listaRec = bundleRec?.getStringArrayList("keyRecuperacion")!!
         listaIngresoBruto = bundleVentas?.getStringArrayList ("keyValoresListaIngresoBruto")!!
         mesInicial = bundleMesIni?.getInt("keyMesInicial")!!
         proyeccion = bundleProyeccion!!.getString("keyValorProyeccion")!!
@@ -47,6 +53,10 @@ class MainActivity8 : AppCompatActivity() {
                 val bundleProyeccion = Bundle()
                 val bundleListaIngresoBruto = Bundle()
                 val bundleMesIni = Bundle()
+                val bundleRec = Bundle()
+                val bundleAportesSalarios = Bundle()
+                bundleAportesSalarios.putSerializable("keyAporteSalario",listaAporteSalario)
+                bundleRec.putStringArrayList("keyRecuperacion",listaRec)
                 bundleListaIngresoBruto.putStringArrayList("keyValoresListaIngresoBruto",listaIngresoBruto)
                 bundleMesIni.putInt("keyMesInicial",mesInicial)
                 bundleProyeccion.putString("keyValorProyeccion",proyeccion)
@@ -54,6 +64,8 @@ class MainActivity8 : AppCompatActivity() {
                 bundleGasto.putStringArrayList("keyValoresGastos",listaGastoMensuales)
                 bundleAlquiler.putStringArrayList("keyValoresAlquiler",listaAlquileresMensuales)
                 bundleProyeccion.putString("keyValorProyeccion",proyeccion.toString())
+                ventana.putExtras(bundleAportesSalarios)
+                ventana.putExtras(bundleRec)
                 ventana.putExtras(bundleCompras)
                 ventana.putExtras(bundleGasto)
                 ventana.putExtras(bundleAlquiler)

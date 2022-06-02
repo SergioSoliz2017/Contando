@@ -12,6 +12,7 @@ class MainActivity5 : AppCompatActivity() {
     var proyeccion : String = ""
     var listaIngresoBruto : ArrayList<String> = ArrayList()
     var mesInicial = 0
+    var listaRec : ArrayList <String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +20,8 @@ class MainActivity5 : AppCompatActivity() {
         val bundleMesAño = intent.extras
         val bundleVentas = intent.extras
         val bundleMesIni = intent.extras
+        val bundleRec = intent.extras
+        listaRec = bundleRec?.getStringArrayList("keyRecuperacion")!!
         listaIngresoBruto = bundleVentas?.getStringArrayList ("keyValoresListaIngresoBruto")!!
         mesInicial = bundleMesIni?.getInt("keyMesInicial")!!
         arregloMesAño = bundleMesAño?.getStringArray("keyValoresMesAño")!!
@@ -35,6 +38,8 @@ class MainActivity5 : AppCompatActivity() {
                 val bundleProyeccion = Bundle()
                 val bundleListaIngresoBruto = Bundle()
                 val bundleMesIni = Bundle()
+                val bundleRec = Bundle()
+                bundleRec.putStringArrayList("keyRecuperacion",listaRec)
                 bundleListaIngresoBruto.putStringArrayList("keyValoresListaIngresoBruto",listaIngresoBruto)
                 bundleMesIni.putInt("keyMesInicial",mesInicial)
                 val arregloSalarios = arrayOf(aporte_patronales.text.toString(),incremento_salarial.text.toString(),nro_trabajadores.text.toString(),sueldo_individual.text.toString())
@@ -42,6 +47,7 @@ class MainActivity5 : AppCompatActivity() {
                 bundleMesAño.putStringArray("keyValoresMesAño", arregloMesAño)
                 bundleProyeccion.putString("keyValorProyeccion",proyeccion)
                 val ventana = Intent(this, MainActivity6:: class.java)
+                ventana.putExtras(bundleRec)
                 ventana.putExtras(bundleListaIngresoBruto)
                 ventana.putExtras(bundleMesIni)
                 ventana.putExtras(bundleProyeccion)

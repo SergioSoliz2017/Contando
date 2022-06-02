@@ -12,27 +12,97 @@ class MainActivity12 : AppCompatActivity() {
 
     var valoresIt : ArrayList<ArrayList<String>> = ArrayList()
     var listaIt : ArrayList<ArrayList<String>> = ArrayList()
+    var listaRec : ArrayList <String> = ArrayList()
+    var ventas : ArrayList <String> = ArrayList()
+    var listaAporteSalario : ArrayList<ArrayList<String>> = ArrayList()
+    var comprasActivo : ArrayList <String> = ArrayList()
+    var gastosOperativos : ArrayList <String> = ArrayList()
+    var iva : ArrayList <String> = ArrayList()
+    var listaItMandar : ArrayList <String> = ArrayList()
+    var iue : ArrayList <String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main12)
         val bundleIt = intent.extras
+        val bundleRec = intent.extras
+        val bundleAportesSalario = intent.extras
+        val bundleCompraActivo = intent.extras
+        val bundleGastoOperativo = intent.extras
+        val bundleIva = intent.extras
+        val bundleIue = intent.extras
+        iue = bundleIue?.getStringArrayList("keuIue")!!
+        iva = bundleIva?.getStringArrayList("keyIva")!!
+        gastosOperativos = bundleGastoOperativo?.getStringArrayList("keyGastosOperativos")!!
+        comprasActivo = bundleCompraActivo?.getStringArrayList("keyComprasActivo")!!
+        listaAporteSalario = bundleAportesSalario?.getSerializable("keyAporteSalario") as ArrayList<ArrayList<String>>
+        listaRec = bundleRec?.getStringArrayList("keyRecuperacion")!!
         valoresIt = (bundleIt?.getSerializable("keyIt") as ArrayList<ArrayList<String>>?)!!
         encabezado()
+        ventas = valoresIt.get(0)
         listaIt.add(valoresIt.get(0))
         listaIt.add(valoresIt.get(1))
         listaIt.add(valoresIt.get(2))
         listaIt.add(valoresIt.get(3))
         totalVentaBienes()
+        saldo()
         crearTabla()
         siguiente()
     }
 
+    private fun saldo() {
+        var saldoRecompensar : ArrayList<String> = ArrayList()
+        var saldoDefinitivo : ArrayList<String> = ArrayList()
+        saldoRecompensar.add("SALDO IUE POR COMPENSAR DEL MES ANTERIOR")
+        saldoDefinitivo.add("SALDO DEFINITIVO A FAVOR DEL FISCO (CONTRIBUYENTE) ")
+        saldoRecompensar.add("0")
+        var valor : Double =  listaIt.get(6).get(1).toDouble() + saldoRecompensar.get(1).toDouble()
+        saldoRecompensar.add("10000")
+        saldoDefinitivo.add(valor.toInt().toString())
+        var cont = 2
+        while (cont < 61){
+            if(saldoDefinitivo.get(cont -1).toInt() < 0){
+                valor = listaIt.get(6).get(cont).toDouble() + saldoRecompensar.get(cont).toDouble()
+            }else{
+                valor = listaIt.get(6).get(cont).toDouble() - saldoRecompensar.get(cont).toDouble()
+            }
+            saldoRecompensar.add(valor.toInt().toString())
+            saldoDefinitivo.add(valor.toInt().toString())
+            cont ++
+        }
+        listaIt.add( saldoRecompensar)
+        listaIt.add(saldoDefinitivo)
+        listaItMandar = saldoDefinitivo
+    }
+
     private fun siguiente() {
         boton_presupuesto_caja.setOnClickListener {
+            val bundleRec = Bundle()
+            val bundleVentas = Bundle()
+            val bundleAportesSalarios = Bundle()
+            val bundleComprasActivos = Bundle()
+            val bundleGastosOperativos = Bundle()
+            val bundleIva = Bundle()
+            val bundleIt = Bundle()
+            val bundleIue = Bundle()
+            bundleIue.putStringArrayList("keuIue",iue)
+            bundleIt.putStringArrayList("keyIt",listaItMandar)
+            bundleIva.putStringArrayList("keyIva", iva)
+            bundleGastosOperativos.putStringArrayList("keyGastosOperativos", gastosOperativos)
+            bundleComprasActivos.putStringArrayList("keyComprasActivo",comprasActivo)
+            bundleAportesSalarios.putSerializable("keyAporteSalario",listaAporteSalario)
+            bundleVentas.putStringArrayList("keyVentas" , ventas)
+            bundleRec.putStringArrayList("keyRecuperacion",listaRec)
             val ventana = Intent(this, MainActivity13:: class.java)
+            ventana.putExtras(bundleIt)
+            ventana.putExtras(bundleIue)
+            ventana.putExtras(bundleIva)
+            ventana.putExtras(bundleGastosOperativos)
+            ventana.putExtras(bundleComprasActivos)
+            ventana.putExtras(bundleAportesSalarios)
+            ventana.putExtras(bundleVentas)
+            ventana.putExtras(bundleRec)
             startActivity(ventana)
-
         }
     }
 

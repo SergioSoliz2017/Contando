@@ -20,6 +20,7 @@ class MainActivity2 : AppCompatActivity() {
         val num2: Double? = arreglo[1].toDouble()
         val num3: Double? = arreglo[2].toDouble()
         val num4: Double? = arreglo[3].toDouble()
+
         val num5: Double? = arreglo[4].toDouble()
         val num6: Double? = arreglo[5].toDouble()
         val num7: Double? = arreglo[6].toDouble()
@@ -50,8 +51,6 @@ class MainActivity2 : AppCompatActivity() {
         val precioBru23:TextView = findViewById(R.id.textbruto23)
         val bruto23:Double? = num3!! * num4!!
         precioBru23.text= bruto23?.let { redondear(it) }
-
-
         val precioContAbr:Double? = bruto21?.let { calculador(it,num5!!/100,num8!!/100) }
         contadoabr.text= precioContAbr?.let { redondear(it) }
         val precioContMay:Double? = bruto22?.let { calculador(it, num6!!/100,num9!!/100) }
@@ -59,19 +58,19 @@ class MainActivity2 : AppCompatActivity() {
         val precioContJun:Double? = bruto23?.let { calculador(it,num7!!/100, num10!!/100) }
         contadojun.text= precioContJun?.let { redondear(it) }
 
-        var abril30rec:Double? = bruto21?.let { mostrador(num5!!, it,1-(num5!! /100), num8!!) }
+        var abril30rec:Double? = bruto21?.let { mostrador(it,num5!! /100) }
         rec30abril.text= abril30rec?.let { redondear(it) }
-        var mayo30rec:Double? = bruto22?.let { mostrador(num6!!,it,1-(num6!!/100), num9!!) }
+        var mayo30rec:Double? = bruto22?.let { mostrador(it,num6!!/100) }
         rec30mayo.text= mayo30rec?.let { redondear(it) }
-        var junio30rec:Double? = bruto23?.let { mostrador(num7!!,it,1-(num7!!/100), num10!!) }
+        var junio30rec:Double? = bruto23?.let { mostrador(it,num7!!/100) }
         rec30junio.text= junio30rec?.let { redondear(it) }
-        var abril60rec:Double? = bruto21?.let { mostrador(num8!!,it,1-(num8!!/100), num5!!) }
+        var abril60rec:Double? = bruto21?.let { mostrador(it,num8!!/100) }
         rec60abril.text= abril60rec?.let { redondear(it) }
-        var mayo60rec:Double? = bruto22?.let { mostrador(num9!!,it,1-(num9!!/100), num6!!) }
+        var mayo60rec:Double? = bruto22?.let { mostrador(it,num9!!/100) }
         rec60mayo.text= mayo60rec?.let { redondear(it) }
-        var junio60rec:Double? = bruto23?.let { mostrador(num10!!,it,1-(num10!!/100), num7!!) }
+        var junio60rec:Double? = bruto23?.let { mostrador(it,num10!!/100) }
         rec60junio.text= junio60rec?.let { redondear(it) }
-        siguiente ()
+        siguiente()
 
     }
 
@@ -109,44 +108,27 @@ class MainActivity2 : AppCompatActivity() {
         return df.format(num)
     }
 
-    private fun calculador(a:Double, b:Double, c:Double):Double{
-        var res = 0.0
+    private fun calculador(a: Double,b: Double,c:Double):Double{
+        var res=0.0
         if(b==0.0 && c==0.0){
-            res=a
+            res=a;
         }else{
             if(b==0.0){
-                res=a*c
+                res=a*(1-c)
             }else{
-                res=a*b
+                res=a*(1-b)
             }
+        }
+        return res
+    }
+
+    private fun mostrador(a:Double, b: Double):Double{
+        var res=0.0
+        if(a==0.0){
+            res=0.0
+        }else{
+            res=a*b
         }
         return res;
     }
-
-    private fun mostrador(a:Double, b:Double,c:Double, d:Double):Double{
-        var res=0.0
-        if(a==0.0 && d==0.0){
-            res=0.0
-        }else{
-            if(a==0.0){
-                res=0.0
-            }else{
-                res=b*c
-            }
-        }
-        return res;
-    }
-
-    /*private fun mostrador6(a:Double, b:Double, c:Double, d:Double):Double{
-        var res=0.0
-        if(a==0.0 && d==0.0){
-            res=0.0
-            rec60junio.text=res.toString()
-        }else{
-            var aux:Double=b*c
-            res=aux?.let { redondear(it) }.toDouble()
-            rec60junio.text=res.toString()
-        }
-        return res;
-    }*/
 }

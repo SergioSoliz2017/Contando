@@ -21,6 +21,8 @@ class MainActivity9 : AppCompatActivity() {
     var listaTotal : ArrayList<String> = ArrayList()
     var listaIngresoBruto : ArrayList<String> = ArrayList()
     var mesInicial = 0
+    var listaRec : ArrayList <String> = ArrayList()
+    var listaAporteSalario : ArrayList<ArrayList<String>> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +33,10 @@ class MainActivity9 : AppCompatActivity() {
         val bundleProyeccion = intent.extras
         val bundleVentas = intent.extras
         val bundleMesIni = intent.extras
+        val bundleRec = intent.extras
+        val bundleAportesSalario = intent.extras
+        listaAporteSalario = bundleAportesSalario?.getSerializable("keyAporteSalario") as ArrayList<ArrayList<String>>
+        listaRec = bundleRec?.getStringArrayList("keyRecuperacion")!!
         listaIngresoBruto = bundleVentas?.getStringArrayList ("keyValoresListaIngresoBruto")!!
         mesInicial = bundleMesIni?.getInt("keyMesInicial")!!
         listaComprasMensuales = bundleCompras?.getStringArrayList("keyValoresCompras")!!
@@ -69,12 +75,18 @@ class MainActivity9 : AppCompatActivity() {
             val bundleMesIni = Bundle()
             val bundleCompraMensual = Bundle()
             val bundleTotal = Bundle()
+            val bundleRec = Bundle()
+            val bundleAportesSalarios = Bundle()
+            bundleAportesSalarios.putSerializable("keyAporteSalario",listaAporteSalario)
+            bundleRec.putStringArrayList("keyRecuperacion",listaRec)
             bundleTotal.putStringArrayList("keyValoresTotalGastos",listaTotal)
             bundleCompraMensual.putStringArrayList("keyValoresCompraMensual",listaComprasMensuales)
             bundleListaIngresoBruto.putStringArrayList("keyValoresListaIngresoBruto",listaIngresoBruto)
             bundleMesIni.putInt("keyMesInicial",mesInicial)
             bundleProyeccion.putString("keyValorProyeccion",proyeccion)
             val ventana = Intent(this, MainActivity7:: class.java)
+            ventana.putExtras(bundleAportesSalarios)
+            ventana.putExtras(bundleRec)
             ventana.putExtras(bundleTotal)
             ventana.putExtras(bundleCompraMensual)
             ventana.putExtras(bundleProyeccion)
@@ -202,5 +214,4 @@ class MainActivity9 : AppCompatActivity() {
         val df = DecimalFormat("#.##")
         return df.format(num)
     }
-
 }

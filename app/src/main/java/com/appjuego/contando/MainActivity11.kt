@@ -16,7 +16,12 @@ class MainActivity11 : AppCompatActivity() {
     var listaGeneral : ArrayList <ArrayList<String>> = ArrayList()
     var generado : Boolean = false
     var valoresIt : ArrayList<ArrayList<String>> = ArrayList()
-
+    var listaRec : ArrayList <String> = ArrayList()
+    var listaAporteSalario : ArrayList<ArrayList<String>> = ArrayList()
+    var comprasActivo : ArrayList <String> = ArrayList()
+    var gastosOperativos : ArrayList <String> = ArrayList()
+    var iva : ArrayList <String> = ArrayList()
+    var iue : ArrayList <String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +29,16 @@ class MainActivity11 : AppCompatActivity() {
         val bundleVentas = intent.extras
         val bundleCompra = intent.extras
         val bundleIt = intent.extras
+        val bundleRec = intent.extras
+        val bundleAportesSalario = intent.extras
+        val bundleCompraActivo = intent.extras
+        val bundleGastoOperativo = intent.extras
+        val bundleIva = intent.extras
+        iva = bundleIva?.getStringArrayList("keyIva")!!
+        gastosOperativos = bundleGastoOperativo?.getStringArrayList("keyGastosOperativos")!!
+        comprasActivo = bundleCompraActivo?.getStringArrayList("keyComprasActivo")!!
+        listaAporteSalario = bundleAportesSalario?.getSerializable("keyAporteSalario") as ArrayList<ArrayList<String>>
+        listaRec = bundleRec?.getStringArrayList("keyRecuperacion")!!
         valoresIt = (bundleIt?.getSerializable("keyIt") as ArrayList<ArrayList<String>>?)!!
         ventas  = bundleVentas?.getStringArrayList("keyVenta")!!
         compras = bundleCompra?.getStringArrayList("keyCompra")!!
@@ -34,25 +49,60 @@ class MainActivity11 : AppCompatActivity() {
 
     private fun mostrarTabla() {
         boton_generar_tabla.setOnClickListener {
-            generado = true
-            encabezado()
-            utilidades()
-            gastosDeduciles()
-            ingresosNoImponibles()
-            utilidadImpositiva()
-            iuePagar()
-            utilidadDespues()
-            var tablaIUE : TableDinamicaIUE = TableDinamicaIUE (tabla_iue,applicationContext)
-            tablaIUE.addData(listaGeneral)
+            if (valido()){
+                generado = true
+                encabezado()
+                utilidades()
+                gastosDeduciles()
+                ingresosNoImponibles()
+                utilidadImpositiva()
+                iuePagar()
+                utilidadDespues()
+                var tablaIUE : TableDinamicaIUE = TableDinamicaIUE (tabla_iue,applicationContext)
+                tablaIUE.addData(listaGeneral)
+            }else{
+
+            }
         }
+    }
+
+    private fun valido(): Boolean {
+        var valido = true
+        if (gastos_deducibles.text.toString().isEmpty()){
+            gastos_deducibles.setError("Introducir Gasto Deducible")
+            valido = false
+        }
+        if (ingresos_no_imponibles.text.toString().isEmpty()){
+            ingresos_no_imponibles.setError("Introducir Ingreso No Imponible")
+            valido = false
+        }
+        return valido
     }
 
     private fun siguiente() {
         boton_it.setOnClickListener {
             if (generado){
                 val bundleIt = Bundle()
+                val bundleRec = Bundle()
+                val bundleAportesSalarios = Bundle()
+                val bundleComprasActivos = Bundle()
+                val bundleGastosOperativos = Bundle()
+                val bundleIva = Bundle()
+                val bundleIue = Bundle()
+                bundleIue.putStringArrayList("keuIue",iue)
+                bundleIva.putStringArrayList("keyIva", iva)
+                bundleGastosOperativos.putStringArrayList("keyGastosOperativos", gastosOperativos)
+                bundleComprasActivos.putStringArrayList("keyComprasActivo",comprasActivo)
+                bundleAportesSalarios.putSerializable("keyAporteSalario",listaAporteSalario)
+                bundleRec.putStringArrayList("keyRecuperacion",listaRec)
                 bundleIt.putSerializable("keyIt",valoresIt)
                 val ventana = Intent(this, MainActivity12:: class.java)
+                ventana.putExtras(bundleIue)
+                ventana.putExtras(bundleIva)
+                ventana.putExtras(bundleGastosOperativos)
+                ventana.putExtras(bundleComprasActivos)
+                ventana.putExtras(bundleAportesSalarios)
+                ventana.putExtras(bundleRec)
                 ventana.putExtras(bundleIt)
                 startActivity(ventana)
             }else{
@@ -82,6 +132,7 @@ class MainActivity11 : AppCompatActivity() {
             iuePagar.add(redondear(valor))
             cont++
         }
+        iue = iuePagar
         listaGeneral.add(iuePagar)
     }
 

@@ -16,6 +16,8 @@ class MainActivity7 : AppCompatActivity() {
     var mesInicial = 0
     var listaTotal : ArrayList<String> = ArrayList()
     var listaComprasMensuales : ArrayList<String> = ArrayList()
+    var listaRec : ArrayList <String> = ArrayList()
+    var listaAporteSalario : ArrayList<ArrayList<String>> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +27,10 @@ class MainActivity7 : AppCompatActivity() {
         val bundleMesIni = intent.extras
         val bundleTotal = intent.extras
         val bundleCompraMensual = intent.extras
+        val bundleRec = intent.extras
+        val bundleAportesSalario = intent.extras
+        listaAporteSalario = bundleAportesSalario?.getSerializable("keyAporteSalario") as ArrayList<ArrayList<String>>
+        listaRec = bundleRec?.getStringArrayList("keyRecuperacion")!!
         listaTotal = bundleTotal?.getStringArrayList ("keyValoresTotalGastos")!!
         listaComprasMensuales = bundleCompraMensual?.getStringArrayList("keyValoresCompraMensual")!!
         listaIngresoBruto = bundleVentas?.getStringArrayList ("keyValoresListaIngresoBruto")!!
@@ -64,6 +70,10 @@ class MainActivity7 : AppCompatActivity() {
                 val bundleMesIni = Bundle()
                 val bundleCompraMensual = Bundle()
                 val bundleTotal = Bundle()
+                val bundleRec = Bundle()
+                val bundleAportesSalarios = Bundle()
+                bundleAportesSalarios.putSerializable("keyAporteSalario",listaAporteSalario)
+                bundleRec.putStringArrayList("keyRecuperacion",listaRec)
                 bundleTotal.putStringArrayList("keyValoresTotalGastos",listaTotal)
                 bundleCompraMensual.putStringArrayList("keyValoresCompraMensual",listaComprasMensuales)
                 bundleListaIngresoBruto.putStringArrayList("keyValoresListaIngresoBruto",listaIngresoBruto)
@@ -71,6 +81,8 @@ class MainActivity7 : AppCompatActivity() {
                 bundleDatosNecesarios.putStringArrayList("keyValorDatosNecesarios",datosNecesarios)
                 bundleProyeccion.putString("keyValorProyeccion",proyeccion)
                 val ventana = Intent(this, MainActivity10:: class.java)
+                ventana.putExtras(bundleAportesSalarios)
+                ventana.putExtras(bundleRec)
                 ventana.putExtras(bundleTotal)
                 ventana.putExtras(bundleCompraMensual)
                 ventana.putExtras(bundleDatosNecesarios)
@@ -159,6 +171,5 @@ class MainActivity7 : AppCompatActivity() {
         }
         return valido
     }
-
 }
 
